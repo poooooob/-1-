@@ -25,7 +25,7 @@
         JOIN carmanage.station st2 ON r.end_station_id = st2.station_id
         <where>
             <if test="userName != null and userName != ''">
-                AND u.user_name = #{userName}
+                AND u.user_name LIKE CONCAT('%', #{userName}, '%')
             </if>
             <if test="routeId != null">
                 AND r.route_id = #{routeId}
