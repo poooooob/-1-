@@ -1,7 +1,9 @@
 package com.itheima.mp.mapper;
 
+import com.itheima.mp.domain.po.Order;
 import com.itheima.mp.domain.vo.OrderVo;
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -33,4 +35,13 @@ public interface OrderMapper  {
 
     @Delete("DELETE FROM carmanage.orders WHERE order_id = #{orderId}")
     void deleteById(Integer orderId);
+
+    //根据用户id查询订单
+    @Select("SELECT * FROM carmanage.orders WHERE user_id = #{userId}")
+    List<Order> getByUserId(Integer userId);
+
+
+    //用户购买车票
+    @Insert("INSERT INTO carmanage.orders (user_id, schedule_id, order_time) VALUES (#{userId}, #{scheduleId}, NOW())")
+    void userBuyTicket(Integer userId, Integer scheduleId);
 }

@@ -63,4 +63,6 @@ public class ScheduleController {
         scheduleService.delete(scheduleId);
         return Result.success();
     }
+
+
 }

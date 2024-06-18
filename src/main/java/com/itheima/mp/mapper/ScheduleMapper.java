@@ -1,5 +1,6 @@
 package com.itheima.mp.mapper;
 
+import com.itheima.mp.domain.dto.userBuyTicketDTO;
 import com.itheima.mp.domain.po.Schedule;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.itheima.mp.domain.vo.ScheduleVo;
@@ -63,4 +64,28 @@ public interface ScheduleMapper  {
             "available_seats = #{schedule.availableSeats} " +
             "WHERE schedule_id = #{scheduleId}")
     void update(Integer scheduleId, Schedule schedule);
+
+
+    //用户端展示所有车次
+    @Select("SELECT \n" +
+            "    s.schedule_id AS scheduleId,\n" +
+            "    s.vehicle_id AS vehicleId,\n" +
+            "    r.route_name AS routeName,\n" +
+            "    ss.station_name AS departureStation,\n" +
+            "    es.station_name AS arrivalStation,\n" +
+            "    s.departure_time AS departureTime,\n" +
+            "    s.arrival_time AS arrivalTime,\n" +
+            "    s.ticket_price AS ticketPrice,\n" +
+            "    s.available_seats AS availableSeats\n" +
+            "FROM \n" +
+            "    carmanage.schedule s\n" +
+            "JOIN \n" +
+            "    carmanage.route r ON s.route_id = r.route_id\n" +
+            "JOIN \n" +
+            "    carmanage.station ss ON r.start_station_id = ss.station_id\n" +
+            "JOIN \n" +
+            "    carmanage.station es ON r.end_station_id = es.station_id;\n")
+    List<userBuyTicketDTO> showTicket();
+
+
 }

@@ -1,5 +1,6 @@
 package com.itheima.mp.service.impl;
 
+import com.itheima.mp.domain.dto.loginDTO;
 import com.itheima.mp.domain.po.User;
 import com.itheima.mp.mapper.UserMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -33,6 +34,26 @@ public class UserServiceImpl implements UserService {
     public void removeById(Integer id) {
 
         userMapper.removeById(id);
+    }
+
+    @Override
+    public void saveAll(List<User> userList) {
+        userMapper.saveAll(userList);
+    }
+
+    @Override
+    public User login(loginDTO loginDTO) {
+        return userMapper.login(loginDTO);
+    }
+
+    @Override
+    public User findUserById(Integer userId) {
+        return userMapper.findUserById(userId);
+    }
+
+    @Override
+    public void updateUser(User user) {
+        userMapper.updateUser(user);
     }
 
 }

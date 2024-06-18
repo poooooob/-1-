@@ -1,5 +1,6 @@
 package com.itheima.mp.service;
 
+import com.itheima.mp.domain.dto.userBuyTicketDTO;
 import com.itheima.mp.domain.po.Schedule;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.itheima.mp.domain.vo.ScheduleVo;
@@ -28,4 +29,9 @@ public interface ScheduleService {
     ScheduleVo getById(Integer scheduleId);
 
     void update(Integer scheduleId, Schedule schedule);
+
+    //用户端展示所有车次
+    List<userBuyTicketDTO> showTicket();
+
+
 }

@@ -1,5 +1,6 @@
 package com.itheima.mp.service;
 
+import com.itheima.mp.domain.po.Order;
 import com.itheima.mp.domain.vo.OrderVo;
 
 import java.util.List;
@@ -17,4 +18,8 @@ public interface OrderService  {
     List<OrderVo> list();
 
     void removeById(Integer orderId);
+
+    List<Order> getByUserId(Integer userId);
+
+    void userBuyTicket(Integer userId, Integer scheduleId);
 }

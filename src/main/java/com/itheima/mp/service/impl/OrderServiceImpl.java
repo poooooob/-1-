@@ -34,4 +34,20 @@ public class OrderServiceImpl  implements OrderService {
     public void removeById(Integer orderId) {
         orderMapper.deleteById(orderId);
     }
+
+    /**
+     * 根据用户id查询订单
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<Order> getByUserId(Integer userId) {
+        List<Order> list = orderMapper.getByUserId(userId);
+        return list;
+    }
+
+    @Override
+    public void userBuyTicket(Integer userId, Integer scheduleId) {
+        orderMapper.userBuyTicket(userId,scheduleId);
+    }
 }

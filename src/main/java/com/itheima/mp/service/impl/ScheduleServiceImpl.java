@@ -1,5 +1,6 @@
 package com.itheima.mp.service.impl;
 
+import com.itheima.mp.domain.dto.userBuyTicketDTO;
 import com.itheima.mp.domain.po.Schedule;
 import com.itheima.mp.domain.vo.ScheduleVo;
 import com.itheima.mp.mapper.ScheduleMapper;
@@ -50,4 +51,15 @@ public class ScheduleServiceImpl  implements ScheduleService {
     public void update(Integer scheduleId, Schedule schedule) {
         scheduleMapper.update(scheduleId,schedule);
     }
+
+    /**
+     * 用户端展示所有车次
+     * @return
+     */
+    @Override
+    public List<userBuyTicketDTO> showTicket() {
+        return scheduleMapper.showTicket();
+    }
+
+
 }

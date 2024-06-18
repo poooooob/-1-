@@ -32,7 +32,7 @@ public class Order implements Serializable {
 
     private Integer scheduleId;
 
-    private LocalDateTime orderBuytime;
+    private LocalDateTime orderTime;
 
 
 }
