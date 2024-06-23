@@ -5,9 +5,7 @@ import com.itheima.mp.domain.po.User;
 import com.itheima.mp.domain.vo.Result;
 import com.itheima.mp.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,44 +50,63 @@ public class UserController {
     }
     //通过Excel批量导入用户信息
     @PostMapping("/importUsers")
-    public Result importUsers(@RequestParam("file") MultipartFile file){
+    public Result importUsers(@RequestParam("file") MultipartFile file) {
         log.info("通过Excel批量导入用户信息");
         if (file.isEmpty()) {
             return Result.error("文件为空");
         }
-
-        try (InputStream inputStream = file.getInputStream()) {
-            Workbook workbook = new XSSFWorkbook(inputStream);
+        try (InputStream inputStream = file.getInputStream();
+             Workbook workbook = new XSSFWorkbook(inputStream)) {
             Sheet sheet = workbook.getSheetAt(0);
             List<User> userList = new ArrayList<>();
-
             for (Row row : sheet) {
                 if (row.getRowNum() == 0) { // 跳过表头
                     continue;
                 }
-                User user = new User();
-                user.setUserId((int) row.getCell(0).getNumericCellValue());
-                user.setUserName(row.getCell(1).getStringCellValue());
-                user.setUserGender((int) row.getCell(2).getNumericCellValue() == 1 ? "男" : "女");
-                user.setUserPhone(row.getCell(3).getStringCellValue());
-                user.setUserIdCard(row.getCell(4).getStringCellValue());
-                user.setUserIsVerified(row.getCell(5).getBooleanCellValue());
-                user.setUserAccount(row.getCell(6).getStringCellValue());
-                user.setUserPassword(row.getCell(7).getStringCellValue());
-                user.setUserLocation(row.getCell(8).getStringCellValue());
-                userList.add(user);
+                try {
+                    User user = new User();
+                    // 根据单元格类型和内容进行安全读取
+                    user.setUserId((int) getNumericCellValue(row.getCell(0)));
+                    user.setUserName(getStringCellValue(row.getCell(1)));
+                    user.setUserGender(getNumericCellValue(row.getCell(2)) == 1 ? "男" : "女");
+                    user.setUserPhone(getStringCellValue(row.getCell(3)));
+                    user.setUserIdCard(getStringCellValue(row.getCell(4)));
+                    user.setUserIsVerified(getBooleanCellValue(row.getCell(5)));
+                    user.setUserAccount(getStringCellValue(row.getCell(6)));
+                    user.setUserPassword(getStringCellValue(row.getCell(7)));
+                    user.setUserLocation(getStringCellValue(row.getCell(8)));
+                    userList.add(user);
+                } catch (Exception e) {
+                    log.error("Error processing row number: " + row.getRowNum(), e);
+                    return Result.error("数据解析失败");
+                }
             }
-
             userService.saveAll(userList);
-
             return Result.success();
         } catch (IOException e) {
+            log.error("文件读取失败", e);
             return Result.error("导入失败");
         }
     }
-
-
-
+    private String getStringCellValue(Cell cell) {
+        if (cell == null) {
+            return "";
+        }
+        return cell.getCellType() == CellType.STRING ? cell.getStringCellValue() : cell.toString();
     }
+    private double getNumericCellValue(Cell cell) {
+        if (cell == null) {
+            return 0;
+        }
+        return cell.getCellType() == CellType.NUMERIC ? cell.getNumericCellValue() : 0;
+    }
+    private boolean getBooleanCellValue(Cell cell) {
+        if (cell == null) {
+            return false;
+        }
+        return cell.getCellType() == CellType.BOOLEAN ? cell.getBooleanCellValue() : Boolean.parseBoolean(cell.toString());
+    }
+
+}
 
 

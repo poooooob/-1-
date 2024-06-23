@@ -23,15 +23,17 @@ public class VehicleServiceImpl  implements VehicleService {
     @Autowired
     private VehicleMapper vehicleMapper;
 
+
     @Override
     public List<Vehicle> list() {
-
+        //查询车辆
         return vehicleMapper.list();
 
     }
 
     @Override
     public void add(Vehicle vehicle) {
+        //增加车辆
         vehicleMapper.add(vehicle);
     }
 

@@ -28,5 +28,4 @@ public class Station implements Serializable {
 
     private String stationName;
 
-
 }

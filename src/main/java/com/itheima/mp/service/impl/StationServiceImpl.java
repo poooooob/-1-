@@ -28,19 +28,20 @@ public class StationServiceImpl  implements StationService {
     @Override
     public void add(Station station) {
 
-        //调用mapper层的方法
+        //调用mapper层的方法，增加车站
         stationMapper.add(station);
 
     }
 
     @Override
     public void delete(Integer id) {
-        //调用mapper层的方法
+        //调用mapper层的方法，删除车站
         stationMapper.deleteById(id);
     }
 
     @Override
     public List<Station> list() {
+        //查询车站
      List<Station> list =  stationMapper.list();
         return list;
     }

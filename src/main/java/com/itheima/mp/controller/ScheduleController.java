@@ -40,7 +40,13 @@ public class ScheduleController {
         scheduleService.add(schedule);
         return Result.success();
     }
-
+    //删除车次
+    @DeleteMapping("/deleteSchedule/{scheduleId}")
+    public Result deleteSchedule(@PathVariable Integer scheduleId){
+        log.info("删除车次:{}," );
+        scheduleService.delete(scheduleId);
+        return Result.success();
+    }
     //根据ID查询车次
     @GetMapping("/getScheduleById/{scheduleId}")
     public Result getScheduleById(@PathVariable Integer scheduleId){
@@ -55,14 +61,5 @@ public class ScheduleController {
         scheduleService.update(scheduleId,schedule);
         return Result.success();
     }
-
-    //删除车次
-    @DeleteMapping("/deleteSchedule/{scheduleId}")
-    public Result deleteSchedule(@PathVariable Integer scheduleId){
-        log.info("删除车次:{}," );
-        scheduleService.delete(scheduleId);
-        return Result.success();
-    }
-
 
 }

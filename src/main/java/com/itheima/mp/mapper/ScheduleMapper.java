@@ -87,5 +87,9 @@ public interface ScheduleMapper  {
             "    carmanage.station es ON r.end_station_id = es.station_id;\n")
     List<userBuyTicketDTO> showTicket();
 
-
+    //用户购票后余票减1
+    @Update("UPDATE carmanage.schedule " +
+            "SET available_seats = available_seats - 1 " +
+            "WHERE schedule_id = #{scheduleId}")
+    void deleteAvailableSeats(Integer scheduleId);
 }

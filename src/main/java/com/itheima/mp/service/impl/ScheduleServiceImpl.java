@@ -62,4 +62,14 @@ public class ScheduleServiceImpl  implements ScheduleService {
     }
 
 
+    /**
+     * 用户购票后余票减1
+     * @param scheduleId
+     */
+    @Override
+    public void deleteAvailableSeats(Integer scheduleId) {
+        scheduleMapper.deleteAvailableSeats(scheduleId);
+    }
+
+
 }

@@ -34,6 +34,9 @@ public interface UserMapper {
     @Select("select * from user where user_id = #{userId}")
     User findUserById(Integer userId);
 
-    @Update("update user set user_id_card=#{userIdCard},user_name=#{userName},user_is_verified=#{userIsVerified}, user_phone=#{userPhone},user_account = #{userAccount}, user_location = #{userLocation} where user_id = #{userId}")
+    @Update("update user set user_id_card=#{userIdCard}," +
+            "user_name=#{userName},user_is_verified=#{userIsVerified}, " +
+            "user_phone=#{userPhone},user_account = #{userAccount}," +
+            " user_location = #{userLocation} where user_id = #{userId}")
     void updateUser(User user);
 }

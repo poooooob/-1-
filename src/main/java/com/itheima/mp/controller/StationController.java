@@ -24,6 +24,8 @@ import java.util.List;
 @RequestMapping("/station")
 public class StationController {
 
+
+    //展示所有车站信息
     @Autowired
     private StationService stationService;
     @GetMapping("/getAllStations")
@@ -33,7 +35,6 @@ public class StationController {
         return Result.success(stationList);
     }
 
-
     //增加车站
     @PostMapping("/addStation")
     public Result addStation(@RequestBody Station station){
@@ -41,7 +42,6 @@ public class StationController {
         stationService.add(station);
         return Result.success();
     }
-
     //根据车站ID删除车站
     @DeleteMapping("/deleteStation/{id}")
     public Result deleteStation(@PathVariable Integer id){

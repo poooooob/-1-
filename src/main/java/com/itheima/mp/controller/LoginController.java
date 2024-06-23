@@ -49,7 +49,7 @@ public class LoginController {
     public Result getUserInfo(@RequestHeader("token") String token) {
         try {
             Claims claims = Jwts.parser()
-                    .setSigningKey("taohongchen") // 替换为你的密钥
+                    .setSigningKey("taohongchen") //密钥
                     .parseClaimsJws(token)
                     .getBody();
 
@@ -70,26 +70,21 @@ public class LoginController {
     public Result updateUserInfo(@RequestBody updateUserDTO updateUserDTO, @RequestHeader("token") String token) {
         try {
             Claims claims = Jwts.parser()
-                    .setSigningKey("taohongchen") // 替换为你的密钥
+                    .setSigningKey("taohongchen")
                     .parseClaimsJws(token)
                     .getBody();
-
             Integer userId = (Integer) claims.get("userId");
             if (userId == null) {
                 return Result.error("无效的token");
             }
-
             User user = userService.findUserById(userId);
             if (user == null) {
                 return Result.error("用户不存在");
             }
-
             user.setUserPhone(updateUserDTO.getUserPhone());
             user.setUserAccount(updateUserDTO.getUserAccount());
             user.setUserLocation(updateUserDTO.getUserLocation());
-
             userService.updateUser(user);
-
             return Result.success();
         } catch (Exception e) {
             return Result.error("更新用户信息失败");
@@ -101,7 +96,7 @@ public class LoginController {
     public Result realName(@RequestBody verifyUserDTO verifyUserDTO, @RequestHeader("token") String token) {
         try {
             Claims claims = Jwts.parser()
-                    .setSigningKey("taohongchen") // 替换为你的密钥
+                    .setSigningKey("taohongchen")
                     .parseClaimsJws(token)
                     .getBody();
 
@@ -109,18 +104,14 @@ public class LoginController {
             if (userId == null) {
                 return Result.error("无效的token");
             }
-
             User user = userService.findUserById(userId);
             if (user == null) {
                 return Result.error("用户不存在");
             }
-
             user.setUserIdCard(verifyUserDTO.getUserIdCard());
             user.setUserName(verifyUserDTO.getUserName());
             user.setUserIsVerified(true);
-
             userService.updateUser(user);
-
             return Result.success();
         } catch (Exception e) {
             return Result.error("实名认证失败");
@@ -132,28 +123,23 @@ public class LoginController {
     public Result updateRealName(@RequestBody verifyUserDTO verifyUserDTO, @RequestHeader("token") String token) {
         try {
             Claims claims = Jwts.parser()
-                    .setSigningKey("taohongchen") // 替换为你的密钥
+                    .setSigningKey("taohongchen")
                     .parseClaimsJws(token)
                     .getBody();
-
             Integer userId = (Integer) claims.get("userId");
             if (userId == null) {
                 return Result.error("无效的token");
             }
-
             User user = userService.findUserById(userId);
             if (user == null) {
                 return Result.error("用户不存在");
             }
-
             user.setUserIdCard(verifyUserDTO.getUserIdCard());
             user.setUserName(verifyUserDTO.getUserName());
-
             userService.updateUser(user);
-
             return Result.success();
         } catch (Exception e) {
-            return Result.error("实名认证失败");
+            return Result.error("更新实名认证失败");
         }
     }
 
@@ -194,18 +180,15 @@ public class LoginController {
                     .setSigningKey("taohongchen")
                     .parseClaimsJws(token)
                     .getBody();
-
             Integer userId = (Integer) claims.get("userId");
             if (userId == null) {
                 return Result.error("无效的token");
             }
-
             Integer scheduleId = purchaseRequestDTO.getScheduleId();
-
             orderService.userBuyTicket(userId, scheduleId);
-
+            //余票减1
+            scheduleService.deleteAvailableSeats(scheduleId);
             return Result.success();
-
         } catch (Exception e) {
             return Result.error("token解析失败");
         }

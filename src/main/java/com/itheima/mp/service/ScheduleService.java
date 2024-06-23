@@ -34,4 +34,6 @@ public interface ScheduleService {
     List<userBuyTicketDTO> showTicket();
 
 
+    //用户购票后余票减1
+    void deleteAvailableSeats(Integer scheduleId);
 }
