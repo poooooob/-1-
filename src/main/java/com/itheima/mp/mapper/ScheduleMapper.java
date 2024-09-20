@@ -5,7 +5,9 @@ import com.itheima.mp.domain.po.Schedule;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.itheima.mp.domain.vo.ScheduleVo;
 import org.apache.ibatis.annotations.*;
+import org.apache.poi.hpsf.Decimal;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -92,4 +94,14 @@ public interface ScheduleMapper  {
             "SET available_seats = available_seats - 1 " +
             "WHERE schedule_id = #{scheduleId}")
     void deleteAvailableSeats(Integer scheduleId);
+
+   
+
+    //判断是否有余票
+    @Select("SELECT available_seats FROM carmanage.schedule WHERE schedule_id = #{scheduleId}")
+    Integer getAvailableSeats(Integer scheduleId);
+
+    //根据车次ID查询车次价格
+    @Select("SELECT ticket_price FROM carmanage.schedule WHERE schedule_id = #{scheduleId}")
+    BigDecimal getTicketPriceByScheduleId(Integer scheduleId);
 }

@@ -36,4 +36,7 @@ public interface ScheduleService {
 
     //用户购票后余票减1
     void deleteAvailableSeats(Integer scheduleId);
+
+    //判断是否有余票
+    boolean hasAvailableSeats(Integer scheduleId);
 }

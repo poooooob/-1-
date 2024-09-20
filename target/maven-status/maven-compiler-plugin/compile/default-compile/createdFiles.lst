@@ -3,6 +3,7 @@ com\itheima\mp\domain\dto\PurchaseRequestDTO.class
 com\itheima\mp\service\VehicleService.class
 com\itheima\mp\utils\JwtUtils.class
 com\itheima\mp\service\ScheduleService.class
+com\itheima\config\AlipayConfig.class
 com\itheima\mp\controller\StationController.class
 com\itheima\mp\domain\dto\verifyUserDTO.class
 com\itheima\mp\controller\ScheduleController.class
@@ -39,6 +40,7 @@ com\itheima\mp\service\StationService.class
 com\itheima\config\WebConfig.class
 com\itheima\mp\domain\dto\RouteDTO.class
 com\itheima\mp\mapper\ScheduleMapper.class
+com\itheima\mp\controller\AlipayController.class
 com\itheima\mp\mapper\UserMapper.class
 com\itheima\mp\domain\po\Admin.class
 com\itheima\mp\domain\vo\RouteVo.class

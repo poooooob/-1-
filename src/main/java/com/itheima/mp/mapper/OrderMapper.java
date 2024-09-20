@@ -36,12 +36,28 @@ public interface OrderMapper  {
     @Delete("DELETE FROM carmanage.orders WHERE order_id = #{orderId}")
     void deleteById(Integer orderId);
 
-    //根据用户id查询订单
+    //根据用户id查询历史订单
     @Select("SELECT * FROM carmanage.orders WHERE user_id = #{userId}")
     List<Order> getByUserId(Integer userId);
 
 
     //用户购买车票
-    @Insert("INSERT INTO carmanage.orders (user_id, schedule_id, order_time) VALUES (#{userId}, #{scheduleId}, NOW())")
+    @Insert("INSERT INTO carmanage.orders (user_id, schedule_id, order_time)" +
+            " VALUES (#{userId}, #{scheduleId}, NOW())")
     void userBuyTicket(Integer userId, Integer scheduleId);
+
+    //根据订单ID查询订单信息
+    @Select("SELECT * FROM carmanage.orders WHERE order_id = #{orderId}")
+    Order selectById(Integer orderId);
+
+
+    //创建订单但不扣除余票
+    void insert(Order order);
+
+    @Select("SELECT * FROM carmanage.orders WHERE order_id = #{outTradeNo}")
+    Order getOrderByTradeNo(String outTradeNo);
+
+    //根据OrderId获取ScheduleId
+    @Select("SELECT schedule_id FROM carmanage.orders WHERE order_id = #{orderId}")
+    Integer getScheduleIdByOrderId(Integer orderId);
 }

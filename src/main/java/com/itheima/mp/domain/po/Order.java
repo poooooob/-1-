@@ -34,5 +34,7 @@ public class Order implements Serializable {
 
     private LocalDateTime orderTime;
 
-
+    public Integer getId() {
+        return orderId;
+    }
 }

@@ -71,5 +71,19 @@ public class ScheduleServiceImpl  implements ScheduleService {
         scheduleMapper.deleteAvailableSeats(scheduleId);
     }
 
+    /**
+     * 判断是否有余票
+     * @param scheduleId
+     * @return
+     */
+    @Override
+    public boolean hasAvailableSeats(Integer scheduleId) {
+        Integer availableSeats = scheduleMapper.getAvailableSeats(scheduleId);
+        if(availableSeats>0){
+            return true;
+        }
+        return false;
+    }
+
 
 }

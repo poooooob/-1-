@@ -10,6 +10,7 @@ import com.itheima.mp.service.UserService;
 import com.itheima.mp.utils.JwtUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/login")
+@Slf4j
 public class LoginController {
 
     @Autowired
@@ -172,10 +174,12 @@ public class LoginController {
             return Result.error("token解析失败");
         }
     }
+
     // 用户购票
     @PostMapping("/purchaseTicket")
     public Result userBuyTicket(@RequestHeader("token") String token, @RequestBody PurchaseRequestDTO purchaseRequestDTO) {
         try {
+            // 验证token并获取用户ID
             Claims claims = Jwts.parser()
                     .setSigningKey("taohongchen")
                     .parseClaimsJws(token)
@@ -184,12 +188,26 @@ public class LoginController {
             if (userId == null) {
                 return Result.error("无效的token");
             }
+
             Integer scheduleId = purchaseRequestDTO.getScheduleId();
-            orderService.userBuyTicket(userId, scheduleId);
-            //余票减1
-            scheduleService.deleteAvailableSeats(scheduleId);
-            return Result.success();
+
+            // 检查是否有足够余票
+            if (!scheduleService.hasAvailableSeats(scheduleId)) {
+                return Result.error("余票不足");
+            }
+
+            // 创建订单但不扣除余票，等待支付回调
+            Order order = orderService.createOrder(userId, scheduleId);
+
+            if (order != null && order.getOrderId() != null) {
+                System.out.println("Order created successfully, orderId: " + order.getOrderId());
+                // 返回订单ID，前端会用这个ID去发起支付请求
+                return Result.success(order.getOrderId());
+            } else {
+                return Result.error("小笨蛋，订单创建失败了");
+            }
         } catch (Exception e) {
+            e.printStackTrace();
             return Result.error("token解析失败");
         }
     }

@@ -22,8 +22,10 @@ C:\Users\hongchen\IdeaProjects\tlias-web-management\src\main\java\com\itheima\mp
 C:\Users\hongchen\IdeaProjects\tlias-web-management\src\main\java\com\itheima\mp\service\UserService.java
 C:\Users\hongchen\IdeaProjects\tlias-web-management\src\main\java\com\itheima\mp\domain\dto\RouteDTO.java
 C:\Users\hongchen\IdeaProjects\tlias-web-management\src\main\java\com\itheima\mp\domain\dto\userBuyTicketDTO.java
+C:\Users\hongchen\IdeaProjects\tlias-web-management\src\main\java\com\itheima\config\AlipayConfig.java
 C:\Users\hongchen\IdeaProjects\tlias-web-management\src\main\java\com\itheima\mp\domain\vo\RouteVo.java
 C:\Users\hongchen\IdeaProjects\tlias-web-management\src\main\java\com\itheima\mp\controller\RouteController.java
+C:\Users\hongchen\IdeaProjects\tlias-web-management\src\main\java\com\itheima\mp\controller\AlipayController.java
 C:\Users\hongchen\IdeaProjects\tlias-web-management\src\main\java\com\itheima\mp\domain\vo\Result.java
 C:\Users\hongchen\IdeaProjects\tlias-web-management\src\main\java\com\itheima\mp\domain\po\Admin.java
 C:\Users\hongchen\IdeaProjects\tlias-web-management\src\main\java\com\itheima\mp\domain\po\Station.java
